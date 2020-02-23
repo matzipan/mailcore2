@@ -830,13 +830,15 @@ ConnectionLogger * IMAPAsyncSession::connectionLogger()
 
 IMAPMessageRenderingOperation * IMAPAsyncSession::renderingOperation(IMAPMessage * message,
                                                                      String * folder,
-                                                                     IMAPMessageRenderingType type)
+                                                                     IMAPMessageRenderingType type,
+                                                                     HTMLRendererTemplateCallback * htmlCallback)
 {
     IMAPMessageRenderingOperation * op = new IMAPMessageRenderingOperation();
     op->setMainSession(this);
     op->setMessage(message);
     op->setFolder(folder);
     op->setRenderingType(type);
+    op->setTemplateCallback(htmlCallback);
     op->autorelease();
     return op;
 }
@@ -844,28 +846,31 @@ IMAPMessageRenderingOperation * IMAPAsyncSession::renderingOperation(IMAPMessage
 IMAPMessageRenderingOperation * IMAPAsyncSession::htmlRenderingOperation(IMAPMessage * message,
                                                                          String * folder)
 {
-    return renderingOperation(message, folder, IMAPMessageRenderingTypeHTML);
+    return renderingOperation(message, folder, IMAPMessageRenderingTypeHTML, nullptr);
 }
 
 IMAPMessageRenderingOperation * IMAPAsyncSession::htmlBodyRenderingOperation(IMAPMessage * message,
-                                                                             String * folder)
+                                                                             String * folder,
+                                                                             HTMLRendererTemplateCallback * htmlCallback)
 {
-    return renderingOperation(message, folder, IMAPMessageRenderingTypeHTMLBody);
+    return renderingOperation(message, folder, IMAPMessageRenderingTypeHTMLBody, htmlCallback);
 }
 
 IMAPMessageRenderingOperation * IMAPAsyncSession::plainTextRenderingOperation(IMAPMessage * message,
                                                                               String * folder)
 {
-    return renderingOperation(message, folder, IMAPMessageRenderingTypePlainText);
+    return renderingOperation(message, folder, IMAPMessageRenderingTypePlainText, nullptr);
 }
 
 IMAPMessageRenderingOperation * IMAPAsyncSession::plainTextBodyRenderingOperation(IMAPMessage * message,
                                                                                   String * folder,
-                                                                                  bool stripWhitespace)
+                                                                                  bool stripWhitespace,
+                                                                                  HTMLRendererTemplateCallback * htmlCallback)
 {
     return renderingOperation(message, folder,
                               stripWhitespace ? IMAPMessageRenderingTypePlainTextBodyAndStripWhitespace :
-                              IMAPMessageRenderingTypePlainTextBody);
+                              IMAPMessageRenderingTypePlainTextBody,
+                              htmlCallback);
 }
 
 void IMAPAsyncSession::automaticConfigurationDone(IMAPSession * session)

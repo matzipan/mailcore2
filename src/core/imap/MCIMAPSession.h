@@ -202,14 +202,14 @@ namespace mailcore {
         virtual String * htmlRendering(IMAPMessage * message, String * folder, ErrorCode * pError);
         
         /** HTML rendering of the body of the message.*/
-        virtual String * htmlBodyRendering(IMAPMessage * message, String * folder, ErrorCode * pError);
+        virtual String * htmlBodyRendering(IMAPMessage * message, String * folder, HTMLRendererTemplateCallback * htmlCallback, ErrorCode * pError);
         
         /** Text rendering of the message.*/
         virtual String * plainTextRendering(IMAPMessage * message, String * folder, ErrorCode * pError);
         
         /** Text rendering of the body of the message. All end of line will be removed and white spaces cleaned up if requested.
          This method can be used to generate the summary of the message.*/
-        virtual String * plainTextBodyRendering(IMAPMessage * message, String * folder, bool stripWhitespace, ErrorCode * pError);
+        virtual String * plainTextBodyRendering(IMAPMessage * message, String * folder, bool stripWhitespace, HTMLRendererTemplateCallback * htmlCallback, ErrorCode * pError);
         
         /** Enable automatic query of the capabilities of the IMAP server when set to true. */
         virtual void setAutomaticConfigurationEnabled(bool enabled);

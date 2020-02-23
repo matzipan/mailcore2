@@ -36,6 +36,16 @@ IMAPMessageRenderingType IMAPMessageRenderingOperation::renderingType()
     return mRenderingType;
 }
 
+void IMAPMessageRenderingOperation::setTemplateCallback(HTMLRendererTemplateCallback * htmlCallback)
+{
+    mHTMLCallback = htmlCallback;
+}
+
+HTMLRendererTemplateCallback * IMAPMessageRenderingOperation::templateCallback()
+{
+    return mHTMLCallback;
+}
+
 void IMAPMessageRenderingOperation::setMessage(IMAPMessage * message)
 {
     MC_SAFE_REPLACE_COPY(IMAPMessage, mMessage, message);
@@ -59,16 +69,16 @@ void IMAPMessageRenderingOperation::main()
         mResult = session()->session()->htmlRendering(mMessage, folder(), &error);
     }
     else if (mRenderingType == IMAPMessageRenderingTypeHTMLBody) {
-        mResult = session()->session()->htmlBodyRendering(mMessage, folder(), &error);
+        mResult = session()->session()->htmlBodyRendering(mMessage, folder(), mHTMLCallback, &error);
     }
     else if (mRenderingType == IMAPMessageRenderingTypePlainText) {
         mResult = session()->session()->plainTextRendering(mMessage, folder(), &error);
     }
     else if (mRenderingType == IMAPMessageRenderingTypePlainTextBody) {
-        mResult = session()->session()->plainTextBodyRendering(mMessage, folder(), false, &error);
+        mResult = session()->session()->plainTextBodyRendering(mMessage, folder(), false, mHTMLCallback, &error);
     }
     else if (mRenderingType == IMAPMessageRenderingTypePlainTextBodyAndStripWhitespace) {
-        mResult = session()->session()->plainTextBodyRendering(mMessage, folder(), true, &error);
+        mResult = session()->session()->plainTextBodyRendering(mMessage, folder(), true, mHTMLCallback, &error);
     }
     
     MC_SAFE_RETAIN(mResult);

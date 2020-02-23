@@ -12,6 +12,7 @@
 
 #include <MailCore/MCIMAPOperation.h>
 #include <MailCore/MCIMAPMessage.h>
+#include <MailCore/MCHTMLRendererCallback.h>
 
 #ifdef __cplusplus
 
@@ -27,7 +28,10 @@ namespace mailcore {
         
         virtual void setMessage(IMAPMessage * message);
         virtual IMAPMessage * message();
-        
+
+        void setTemplateCallback(HTMLRendererTemplateCallback * htmlCallback);
+        HTMLRendererTemplateCallback * templateCallback();
+
         // Result.
         virtual String * result();
         
@@ -36,6 +40,7 @@ namespace mailcore {
     
     private:
         IMAPMessageRenderingType mRenderingType;
+        HTMLRendererTemplateCallback * mHTMLCallback;
         String * mResult;
         IMAPMessage * mMessage;
         
