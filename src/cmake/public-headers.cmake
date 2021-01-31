@@ -89,6 +89,7 @@ async/imap/MCIMAPFetchFoldersOperation.h
 async/imap/MCIMAPAppendMessageOperation.h
 async/imap/MCIMAPCopyMessagesOperation.h
 async/imap/MCIMAPMoveMessagesOperation.h
+async/imap/MCIMAPStoreFlagsOperation.h
 async/imap/MCIMAPFetchMessagesOperation.h
 async/imap/MCIMAPFetchContentOperation.h
 async/imap/MCIMAPFetchContentToFileOperation.h
